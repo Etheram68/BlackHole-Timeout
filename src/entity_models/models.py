@@ -8,6 +8,7 @@ class User(BaseModel):
     url: str
     image_url: str
     black_hole_at: str
+    days_left: int
 
 class Project(int, Enum):
     EXAM_06 = 1324

@@ -27,7 +27,9 @@ class DaoFactory:
         self.db.execute('''CREATE TABLE IF NOT EXISTS date
                 (id INTEGER PRIMARY KEY, date str)''')
         self.db.execute('''CREATE TABLE IF NOT EXISTS user
-                (id INTEGER PRIMARY KEY, userId str UNIQUE, login str UNIQUE, url str, imageUrl str, blackHoleAt str)''')
+                        (id INTEGER PRIMARY KEY, userId str UNIQUE,
+                        login str UNIQUE, url str, imageUrl str,
+                        blackHoleAt str, daysLeft INTEGER)''')
         self.con.commit()
         new_date = datetime(int(datetime.now().year), 11, 1, 0, 0, 0)
         if datetime.now() > new_date:

@@ -55,7 +55,8 @@ def get_users_info(users):
             login=r['login'],
             url=r['url'],
             image_url=r['image_url'],
-            black_hole_at=str(day_left)
+            black_hole_at=str(day_left),
+            days_left=day_left.days
         )
         logger.info(users.dict())
         dao_user.add_user(users)
@@ -83,8 +84,21 @@ if __name__ == '__main__':
         client_id=os.environ.get('API_KEY_UID'),
         client_secret=os.environ.get('API_KEY_SECRET')
     )
-    code = scholl_42.get_token()
-    logger.debug(code)
-    id_campus = get_campus_id(os.environ.get('SCHOOL_NAME'))
-    users_id = get_id_users_campus(id_campus)
-    users = get_users_info(users_id)
+    # code = scholl_42.get_token()
+    # logger.debug(code)
+    # id_campus = get_campus_id(os.environ.get('SCHOOL_NAME'))
+    # users_id = get_id_users_campus(id_campus)
+    # users = get_users_info(users_id)
+    login = ''
+    keys_list = ['userId', 'login', 'imageUrl', 'blackHoleAt']
+    while True:
+        lst_id = []
+        res = dao_user.get_users(cursor=login, limite=10)
+        if not res:
+            break
+        for r in res:
+            zip_iterator = zip(keys_list, r)
+            user = dict(zip_iterator)
+            logger.debug(user)
+            login = user['login']
+            lst_id.append(user)
