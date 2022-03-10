@@ -1,4 +1,4 @@
-import time
+import time, os
 import entity_models.models as models
 from api.School42Client import School42Client
 from logger.logger import logger as logger_main
@@ -78,11 +78,11 @@ def get_id_users_campus(id_campus):
 if __name__ == '__main__':
     date_now = datetime.now()
     scholl_42 = School42Client(
-        client_id="91d0f7295e4c9ca9b1895e80daaca9b9a225e565957b49dcdd27db84f1bf3abb",
-        client_secret="636d8752185f2eabbf6415fa3c90e5e42795eb5fcf5137309124008746d17dac"
+        client_id=os.environ.get('API_KEY_UID'),
+        client_secret=os.environ.get('API_KEY_SECRET')
     )
     code = scholl_42.get_token()
     logger.debug(code)
-    id_campus = get_campus_id('Lyon')
+    id_campus = get_campus_id(os.environ.get('SCHOOL_NAME'))
     users_id = get_id_users_campus(id_campus)
     users = get_users_info(users_id)
