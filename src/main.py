@@ -3,9 +3,12 @@ import entity_models.models as models
 from api.School42Client import School42Client
 from logger.logger import logger as logger_main
 from datetime import datetime
+from dao.dao_factory import DaoFactory
 
 
 logger = logger_main.getChild(__name__)
+dao_factory = DaoFactory()
+dao_user = dao_factory.get_dao_user()
 
 def get_campus_id(campus_name):
     payload = {'filter[name]': campus_name}
