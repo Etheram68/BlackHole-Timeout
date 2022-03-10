@@ -13,9 +13,10 @@ class DaoFactory:
         self.con = sqlite3.connect('./BlackHole-Timeout.db')
         self.db = self.con.cursor()
         self.db.execute('''SELECT count(*) from sqlite_master
-                                WHERE type='table' AND name='role' ''')
+                                WHERE type='table' AND name='user' ''')
         rows = self.db.fetchall()
         if not rows[0][0]:
+            logger.debug("Init Table")
             self.__init_tables__()
 
         self.dao_user = DaoUser(db=self.db, con=self.con)
