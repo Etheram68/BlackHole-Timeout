@@ -1,3 +1,4 @@
+from enum import Enum
 from pydantic import BaseModel
 
 
@@ -7,3 +8,7 @@ class User(BaseModel):
     url: str
     image_url: str
     black_hole_at: str
+
+class Project(int, Enum):
+    EXAM_06 = 1324
+    FT_TRANSCENDENCE = 1337

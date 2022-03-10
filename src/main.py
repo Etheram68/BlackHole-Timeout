@@ -30,20 +30,18 @@ def get_users_info(users):
             continue
 
         lst_cursus = r['cursus_users']
-
         find_cursus = [c['blackholed_at'] for c in lst_cursus if c['cursus_id'] == 21]
         if not find_cursus:
             continue
-
         black_hole = find_cursus[0]
         if not black_hole:
             continue
-
-        projects_users = [p['project'] for p in r['projects_users'] if p['project']['id'] == 1324 or p['project']['id'] == 1337]
+        projects_users = [p['project'] for p in r['projects_users'] \
+                if p['project']['id'] == models.Project.EXAM_06 or \
+                   p['project']['id'] == models.Project.FT_TRANSCENDENCE]
         logger.debug(f'User has validate {len(projects_users)} project for end common core')
         if len(projects_users):
             continue
-
         black_hole_obj = datetime.strptime(black_hole[:-1], "%Y-%m-%dT%H:%M:%S.%f")
         day_left = black_hole_obj - date_now
         if day_left.days < 0:
