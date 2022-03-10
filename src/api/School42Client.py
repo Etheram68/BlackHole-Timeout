@@ -42,11 +42,14 @@ class School42Client():
             if r.status_code == 200:
                 r = r.json()
                 return r
+            elif r.status_code == 401:
+                self.get_token()
             elif r.status_code == 429:
                 retry_request += 1
                 if retry_request < 4:
                     time.sleep(1)
                 else:
+                    retry_request = 0
                     date_now = datetime.now()
                     time_to_min = 3600 - (date_now.minute) * 60
                     time_to_sleep = time_to_min + 120
