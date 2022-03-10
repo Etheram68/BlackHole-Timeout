@@ -25,14 +25,14 @@ class DaoFactory:
 
     def __init_tables__(self):
         self.db.execute('''CREATE TABLE IF NOT EXISTS date
-                (date str)''')
+                (id INTEGER PRIMARY KEY, date str)''')
         self.db.execute('''CREATE TABLE IF NOT EXISTS user
-                (userId str, login str, url str, imageUrl str, blackHoleAt str)''')
+                (id INTEGER PRIMARY KEY, userId str UNIQUE, login str UNIQUE, url str, imageUrl str, blackHoleAt str)''')
         self.con.commit()
         new_date = datetime(int(datetime.now().year), 11, 1, 0, 0, 0)
         if datetime.now() > new_date:
             new_date = datetime(int(datetime.now().year + 1), 11, 1, 0, 0, 0)
-        self.db.execute("INSERT INTO date VALUES(?)", (str(new_date),))
+        self.db.execute("INSERT INTO date VALUES(?, ?)", (0, str(new_date),))
         self.con.commit()
 
 

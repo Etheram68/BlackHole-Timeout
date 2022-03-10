@@ -58,6 +58,7 @@ def get_users_info(users):
             black_hole_at=str(day_left)
         )
         logger.info(users.dict())
+        dao_user.add_user(users)
     return users
 
 
