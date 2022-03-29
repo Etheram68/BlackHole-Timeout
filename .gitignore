@@ -5,3 +5,4 @@ logs/
 .env
 data/
 BlackHole-Timeout.db
+.DS_Store
