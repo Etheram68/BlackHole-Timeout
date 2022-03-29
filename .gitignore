@@ -2,3 +2,6 @@
 __pycache__/
 logs/
 *.db
+.env
+data/
+BlackHole-Timeout.db
