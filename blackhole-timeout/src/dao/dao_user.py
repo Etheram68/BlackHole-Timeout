@@ -1,4 +1,6 @@
-import json
+import pymongo, json
+
+from bson.objectid import ObjectId
 from logger.logger import logger as logger_main
 
 
@@ -8,18 +10,8 @@ class DaoUser:
 
     def __init__(self, db, con):
         self.db = db
-        self.con = con
+        self.coll = self.db.students
 
     def add_user(self, users):
+        return self.coll.insert_many(users.dict(by_alias=True)).inserted_ids
 
-        self.db.execute('''INSERT or REPLACE INTO user(userId, login, url,
-                            imageUrl, blackHoleAt, daysLeft) VALUES(?, ?, ?, ?, ?, ?)''', \
-                           (users.user_id, users.login, users.url, users.image_url, \
-                            users.black_hole_at, users.days_left))
-        self.con.commit()
-
-    def get_users(self, cursor='', limite=10):
-        self.db.execute(f'''SELECT userId, login, imageUrl, blackHoleAt
-                            FROM user WHERE daysLeft <= 30 and login > '{cursor}' LIMIT {str(limite)}''')
-        res = self.db.fetchall()
-        return json.loads(json.dumps(res))

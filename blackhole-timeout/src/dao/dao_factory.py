@@ -1,5 +1,8 @@
-import sqlite3
+import pymongo, os
+
+from pymongo import MongoClient
 from datetime import datetime
+
 from dao.dao_user import DaoUser
 from dao.dao_date import DaoDate
 from logger.logger import logger as logger_main
@@ -10,32 +13,23 @@ logger = logger_main.getChild(__name__)
 class DaoFactory:
 
     def __init__(self):
-        self.con = sqlite3.connect('./BlackHole-Timeout.db')
-        self.db = self.con.cursor()
-        self.db.execute('''SELECT count(*) from sqlite_master
-                                WHERE type='table' AND name='user' ''')
-        rows = self.db.fetchall()
-        if not rows[0][0]:
-            logger.debug("Init Table")
-            self.__init_tables__()
+        self.hostname = os.environ.get('MONGODB_HOSTNAME', 'localhost')
+        self.port = os.environ.get('MONGODB_PORT', '27017')
+        self.username = os.environ.get('MONGODB_ADMINUSERNAME', 'admin')
+        self.password = os.environ.get('MONGODB_ADMINPASSWORD', "")
 
-        self.dao_user = DaoUser(db=self.db, con=self.con)
-        self.dao_date = DaoDate(db=self.db, con=self.con)
+        try:
+            client = MongoClient('mongodb://' + self.username + ':' + self.password + '@' + self.hostname + ':'+self.port)
+            logger.info("Connected to MongoDB host: {}".format(self.hostname))
+            logger.debug(client.server_info())
+        except pymongo.errors.ServerSelectionTimeoutError as err:
+            logger.error(err)
 
+        self.db_api = client[os.environ.get('DATABASE_PREFIX', "_") + os.environ.get('MONGODB_DATABASE', "bag_")]
+        self.db_log = client[os.environ.get('DATABASE_PREFIX', "_") + os.environ.get('MONGODB_DATABASE_LOGS_ORG', "logs_org")]
 
-    def __init_tables__(self):
-        self.db.execute('''CREATE TABLE IF NOT EXISTS date
-                (id INTEGER PRIMARY KEY, date str)''')
-        self.db.execute('''CREATE TABLE IF NOT EXISTS user
-                        (id INTEGER PRIMARY KEY, userId str UNIQUE,
-                        login str UNIQUE, url str, imageUrl str,
-                        blackHoleAt str, daysLeft INTEGER)''')
-        self.con.commit()
-        new_date = datetime(int(datetime.now().year), 11, 1, 0, 0, 0)
-        if datetime.now() > new_date:
-            new_date = datetime(int(datetime.now().year + 1), 11, 1, 0, 0, 0)
-        self.db.execute("INSERT INTO date VALUES(?, ?)", (0, str(new_date),))
-        self.con.commit()
+        self.dao_user = DaoUser(db=self.db_api)
+        self.dao_date = DaoDate(db=self.db_api)
 
 
     def get_dao_user(self):

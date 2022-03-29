@@ -58,7 +58,7 @@ def get_users_info(users):
             black_hole_at=str(day_left),
             days_left=day_left.days
         )
-        logger.info(users.dict())
+        logger.info(users)
         dao_user.add_user(users)
     return users
 
@@ -80,25 +80,30 @@ def get_id_users_campus(id_campus):
 
 if __name__ == '__main__':
     date_now = datetime.now()
-    scholl_42 = School42Client(
-        client_id=os.environ.get('API_KEY_UID'),
-        client_secret=os.environ.get('API_KEY_SECRET')
-    )
-    # code = scholl_42.get_token()
-    # logger.debug(code)
-    # id_campus = get_campus_id(os.environ.get('SCHOOL_NAME'))
-    # users_id = get_id_users_campus(id_campus)
-    # users = get_users_info(users_id)
-    login = ''
-    keys_list = ['userId', 'login', 'imageUrl', 'blackHoleAt']
-    while True:
-        lst_id = []
-        res = dao_user.get_users(cursor=login, limite=10)
-        if not res:
-            break
-        for r in res:
-            zip_iterator = zip(keys_list, r)
-            user = dict(zip_iterator)
-            logger.debug(user)
-            login = user['login']
-            lst_id.append(user)
+    try:
+        scholl_name = os.environ.get('SCHOOL_NAME')
+        scholl_42 = School42Client(
+            client_id=os.environ['API_KEY_UID'],
+            client_secret=os.environ['API_KEY_SECRET']
+        )
+    except KeyError:
+        logger.error('API_KEY_UID or API_KEY_SECRET not found')
+        exit()
+    code = scholl_42.get_token()
+    logger.debug(code)
+    id_campus = get_campus_id(scholl_name)
+    users_id = get_id_users_campus(id_campus)
+    users = get_users_info(users_id)
+    # login = ''
+    # keys_list = ['userId', 'login', 'imageUrl', 'blackHoleAt']
+    # while True:
+    #     lst_id = []
+    #     res = dao_user.get_users(cursor=login, limite=10)
+    #     if not res:
+    #         break
+    #     for r in res:
+    #         zip_iterator = zip(keys_list, r)
+    #         user = dict(zip_iterator)
+    #         logger.debug(user)
+    #         login = user['login']
+    #         lst_id.append(user)
