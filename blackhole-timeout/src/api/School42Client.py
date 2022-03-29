@@ -32,7 +32,7 @@ class School42Client():
 
 
     def get(self, root, data=None):
-        logger.debug(f'Get url {self.site}{root} and data: {data}')
+        logger.info(f'Get url {self.site}{root} and data: {data}')
         retry_request = 0
 
         while True:
@@ -53,7 +53,7 @@ class School42Client():
                     date_now = datetime.now()
                     time_to_min = 3600 - (date_now.minute) * 60
                     time_to_sleep = time_to_min + 120
-                    logger.debug(f"Limit request script sleeping at {date_now}, {time_to_sleep / 60} min")
+                    logger.info(f"Limit request script sleeping at {date_now}, {time_to_sleep / 60} min")
                     time.sleep(time_to_sleep)
             else:
                 logger.error(f'Could not resolve {self.site}{root}, returned error {r.status_code}')

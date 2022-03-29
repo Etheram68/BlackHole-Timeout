@@ -1,5 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel, Field
+from typing import List, Optional
 from bson.objectid import ObjectId
 from datetime import datetime
 
@@ -37,6 +38,22 @@ class User(Base):
     image_url: str
     black_hole_at: str
     days_left: int
+
+class UserResponse(BaseModel):
+    user_id: str
+    login: str
+    url: str
+    image_url: str
+    black_hole_at: str
+    days_left: int
+
+class UsersBlackholeResponse(BaseModel):
+    success: bool
+    timestamp: datetime
+    status: str
+    message: str
+    data: List[UserResponse]
+
 
 class Project(int, Enum):
     EXAM_06 = 1324

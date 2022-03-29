@@ -44,7 +44,7 @@ def get_users_info(users):
         projects_users = [p['project'] for p in r['projects_users'] \
                 if p['project']['id'] == models.Project.EXAM_06 or \
                    p['project']['id'] == models.Project.FT_TRANSCENDENCE]
-        logger.debug(f'User has validate {len(projects_users)} project for end common core')
+        logger.info(f'User has validate {len(projects_users)} project for end common core')
         if len(projects_users):
             continue
         black_hole_obj = datetime.strptime(black_hole[:-1], "%Y-%m-%dT%H:%M:%S.%f")
@@ -97,16 +97,3 @@ if __name__ == '__main__':
     id_campus = get_campus_id(scholl_name)
     users_id = get_id_users_campus(id_campus)
     users = get_users_info(users_id)
-    # login = ''
-    # keys_list = ['userId', 'login', 'imageUrl', 'blackHoleAt']
-    # while True:
-    #     lst_id = []
-    #     res = dao_user.get_users(cursor=login, limite=10)
-    #     if not res:
-    #         break
-    #     for r in res:
-    #         zip_iterator = zip(keys_list, r)
-    #         user = dict(zip_iterator)
-    #         logger.debug(user)
-    #         login = user['login']
-    #         lst_id.append(user)

@@ -2,8 +2,8 @@ import pymongo, os
 
 from pymongo import MongoClient
 
-from dao.dao_user import DaoUser
-from dao.dao_date import DaoDate
+from src.dao.dao_user import DaoUser
+from src.dao.dao_date import DaoDate
 from logger import logger as logger_main
 
 
