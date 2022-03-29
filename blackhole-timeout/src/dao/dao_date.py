@@ -3,9 +3,8 @@ from datetime import datetime
 
 class DaoDate:
 
-    def __init__(self, db, con):
+    def __init__(self, db):
         self.db = db
-        self.con = con
 
     def get_date(self):
         self.db.execute("SELECT * FROM date")

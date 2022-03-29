@@ -1,11 +1,10 @@
 import pymongo, os
 
 from pymongo import MongoClient
-from datetime import datetime
 
 from dao.dao_user import DaoUser
 from dao.dao_date import DaoDate
-from logger.logger import logger as logger_main
+from logger import logger as logger_main
 
 
 logger = logger_main.getChild(__name__)

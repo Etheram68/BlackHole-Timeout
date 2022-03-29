@@ -30,7 +30,7 @@ class Base(BaseModel):
         }
 
 
-class User(BaseModel):
+class User(Base):
     user_id: str
     login: str
     url: str

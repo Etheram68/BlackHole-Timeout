@@ -1,7 +1,9 @@
 import time, os
 import entity_models.models as models
+
+from bson.objectid import ObjectId
 from api.School42Client import School42Client
-from logger.logger import logger as logger_main
+from logger import logger as logger_main
 from datetime import datetime
 from dao.dao_factory import DaoFactory
 
@@ -51,6 +53,7 @@ def get_users_info(users):
             continue
 
         users = models.User(
+            id=ObjectId(),
             user_id=r['id'],
             login=r['login'],
             url=r['url'],
