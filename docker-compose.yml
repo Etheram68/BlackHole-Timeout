@@ -1,0 +1,73 @@
+version: '3.1'
+services:
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - 27017-27019:27017-27019
+    volumes:
+      - ${PROJECT_PATH}/data/mongo-db:/data/db
+      - ${PROJECT_PATH}/data/mongo-db-backup:/backup
+
+  mongo-express:
+    image: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    env_file: ./.env
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${ME_CONFIG_MONGODB_ADMINUSERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${ME_CONFIG_MONGODB_ADMINPASSWORD}
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD}
+      ME_CONFIG_MONGODB_URL: "mongodb://${ME_CONFIG_MONGODB_ADMINUSERNAME}:${ME_CONFIG_MONGODB_ADMINPASSWORD}@mongo:27017/"
+    depends_on:
+      - mongo
+
+##########################################################################
+
+  blackhole-timeout:
+    build: ./blackhole-timeout
+    restart: unless-stopped
+    entrypoint: ["uvicorn","--host", "0.0.0.0", "--port", "8080", "--reload", "src.main:app"]
+    ports:
+      - '8080:8080'
+    env_file: ./.env
+    environment:
+      MONGODB_ADMINUSERNAME: '${BLACKHOLE_TIMEOUT_MONGODB_USER_API}'
+      MONGODB_ADMINPASSWORD: '${BLACKHOLE_TIMEOUT_MONGODB_USER_API_PASSWORD}'
+      MONGODB_HOSTNAME: mongo
+      MONGODB_DATABASE: api
+      DATABASE_PREFIX: bag_
+      MONGODB_DATABASE_LOGS: logs
+      MONGODB_DATABASE_LOGS_ORG: logs_org
+      MONGODB_PORT: 27017
+      LOGLEVEL: DEBUG
+      PYTHONUNBUFFERED: 1
+      API_KEY_UID: '${BLACKHOLE_TIMEOUT_API_KEY_UID}'
+      API_KEY_SECRET: '${BLACKHOLE_TIMEOUT_API_KEY_SECRET}'
+      SCHOOL_NAME: '${BLACKHOLE_TIMEOUT_SCHOOL_NAME}'
+    volumes:
+      - '${PROJECT_PATH}/blackhole-timeout/src:/usr/app/src'
+      - '${PROJECT_PATH}/blackhole-timeout/logs:/usr/app/logs'
+    links:
+      - mongo
+    depends_on:
+      mongo:
+        condition: service_started
+      mongo-express:
+        condition: service_started
+    logging:
+      options:
+        max-size: 10m
+        max-file: '3'
+
+  # # #######################################
+
+volumes:
+ mongo-db:
+   driver: local
