@@ -8,6 +8,7 @@ COPY requirements.txt .
 COPY src ./src
 
 RUN pip install -r requirements.txt
+RUN mv src/cron-script.py ./
 
 EXPOSE 8080
 

@@ -4,7 +4,7 @@ from pymongo import MongoClient
 
 from src.dao.dao_user import DaoUser
 from src.dao.dao_date import DaoDate
-from logger import logger as logger_main
+from src.logger.logger import logger as logger_main
 
 
 logger = logger_main.getChild(__name__)

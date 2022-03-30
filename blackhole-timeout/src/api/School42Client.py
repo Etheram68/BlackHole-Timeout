@@ -1,5 +1,5 @@
 import requests, time
-from logger import logger as logger_main
+from src.logger.logger import logger as logger_main
 from datetime import datetime
 
 logger = logger_main.getChild(__name__)

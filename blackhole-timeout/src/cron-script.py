@@ -1,11 +1,11 @@
 import time, os
-import entity_models.models as models
+import src.entity_models.models as models
 
 from bson.objectid import ObjectId
-from api.School42Client import School42Client
-from logger import logger as logger_main
+from src.api.School42Client import School42Client
+from src.logger.logger import logger as logger_main
 from datetime import datetime
-from dao.dao_factory import DaoFactory
+from src.dao.dao_factory import DaoFactory
 
 
 logger = logger_main.getChild(__name__)
