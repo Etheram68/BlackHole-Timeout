@@ -11,6 +11,7 @@ from src.dao.dao_factory import DaoFactory
 logger = logger_main.getChild(__name__)
 dao_factory = DaoFactory()
 dao_user = dao_factory.get_dao_user()
+dao_date = dao_factory.get_dao_date()
 
 def get_campus_id(campus_name):
     payload = {'filter[name]': campus_name}
@@ -92,8 +93,8 @@ if __name__ == '__main__':
     except KeyError:
         logger.error('API_KEY_UID or API_KEY_SECRET not found')
         exit()
-    code = scholl_42.get_token()
-    logger.debug(code)
-    id_campus = get_campus_id(scholl_name)
-    users_id = get_id_users_campus(id_campus)
-    users = get_users_info(users_id)
+    # code = scholl_42.get_token()
+    # logger.debug(code)
+    # id_campus = get_campus_id(scholl_name)
+    # users_id = get_id_users_campus(id_campus)
+    # users = get_users_info(users_id)

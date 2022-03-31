@@ -5,15 +5,20 @@ from fastapi import FastAPI, status
 from src.logger.logger import logger as logger_main
 from src.entity_models import models
 from src.dao.dao_factory import DaoFactory
+from src.core.DateManager import DateManager
+from src.core.UserManager import UserManager
 
 app = FastAPI(root_path=os.environ.get('ROOT_PATH', ''))
 
 logger = logger_main.getChild(__name__)
 dao_factory = DaoFactory()
-dao_user = dao_factory.get_dao_user()
+dao_user = UserManager(dao_factory)
+dao_date = DateManager(dao_factory)
 
 @app.get("/")
 def read_root():
+    res = dao_date.get_date()
+    print(res)
     return {"Hello": "World"}
 
 

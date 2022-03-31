@@ -39,6 +39,11 @@ class User(Base):
     black_hole_at: str
     days_left: int
 
+class DateAddNewUsers(Base):
+    month: str
+    years: str
+    datetime: datetime
+
 class UserResponse(BaseModel):
     user_id: str
     login: str
