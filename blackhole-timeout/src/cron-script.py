@@ -6,12 +6,14 @@ from src.api.School42Client import School42Client
 from src.logger.logger import logger as logger_main
 from datetime import datetime
 from src.dao.dao_factory import DaoFactory
+from src.core.DateManager import DateManager
+from src.core.UserManager import UserManager
 
 
 logger = logger_main.getChild(__name__)
 dao_factory = DaoFactory()
-dao_user = dao_factory.get_dao_user()
-dao_date = dao_factory.get_dao_date()
+user_manager = UserManager(dao_factory)
+date_manager = DateManager(dao_factory)
 
 def get_campus_id(campus_name):
     payload = {'filter[name]': campus_name}
@@ -63,7 +65,7 @@ def get_users_info(users):
             days_left=day_left.days
         )
         logger.info(users)
-        dao_user.add_user(users)
+        user_manager.add_user(users)
     return users
 
 
@@ -93,8 +95,14 @@ if __name__ == '__main__':
     except KeyError:
         logger.error('API_KEY_UID or API_KEY_SECRET not found')
         exit()
-    # code = scholl_42.get_token()
-    # logger.debug(code)
-    # id_campus = get_campus_id(scholl_name)
-    # users_id = get_id_users_campus(id_campus)
-    # users = get_users_info(users_id)
+    result = date_manager.get_date()
+    code = scholl_42.get_token()
+    logger.debug(code)
+    id_campus = get_campus_id(scholl_name)
+    logger.debug(result)
+    if not result:
+        date_manager.update_date()
+        users_id = get_id_users_campus(id_campus)
+    else:
+        users_id = user_manager.get_users()
+    users = get_users_info(users_id)

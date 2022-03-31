@@ -31,3 +31,9 @@ class DaoUser:
             results = results.sort([("days_left", pymongo.ASCENDING)]).skip(
                 page_number*page_size).limit(page_size)
         return [User.parse_obj(obj) for obj in results]
+
+    def get_users(self):
+        results = self.coll.find()
+        if results:
+            return [user['user_id'] for user in results]
+        return results
