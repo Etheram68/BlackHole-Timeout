@@ -5,7 +5,7 @@ class DaoDate:
 
     def __init__(self, db):
         self.db = db
-        self.coll = self.db.add_new_users
+        self.coll = self.db.last_refresh_users
 
     def get_date(self):
         results = self.coll.find_one()

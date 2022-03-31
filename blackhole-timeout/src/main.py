@@ -32,4 +32,3 @@ def users_blackhole_timeout(page:int = 1):
         message='Done',
         data=results
     )
-
