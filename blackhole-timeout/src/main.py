@@ -16,8 +16,6 @@ date_manager = DateManager(dao_factory)
 
 @app.get("/")
 def read_root():
-    res = date_manager.get_date()
-    print(res.datetime > datetime.utcnow())
     return {"Hello": "World"}
 
 

@@ -25,47 +25,50 @@ def get_campus_id(campus_name):
     logger.error(f'Campus not exist or not active Json: {r}')
     exit()
 
+def save_user(day_left, projects_users, black_hole, find_cursus, r):
+    user = user_manager.get_user(r['id'])
+    if not day_left or day_left.days < 0 or len(projects_users) == 2 \
+                or not black_hole or not find_cursus \
+                or r['staff?'] or r['alumni'] or r['is_launched?']:
+            if user:
+                logger.info(f'User {r["login"]} has been deleted')
+                user_manager.delete_user(user.id)
+            return False
+
+    users = models.User(
+        id=ObjectId(),
+        user_id=r['id'],
+        login=r['login'],
+        url=r['url'],
+        image_url=r['image_url'],
+        black_hole_at=str(day_left),
+        days_left=day_left.days
+    )
+    logger.info(users)
+    user_manager.add_user(users)
+    return True
 
 def get_users_info(users):
     for user in users:
         time.sleep(0.2)
         r = scholl_42.get(f'/v2/users/{user}')
-
         if not r:
             logger.error(f'Error with user_id {user}')
             continue
-        if r['staff?'] or r['alumni'] or r['is_launched?']:
-            continue
-
         lst_cursus = r['cursus_users']
         find_cursus = [c['blackholed_at'] for c in lst_cursus if c['cursus_id'] == 21]
-        if not find_cursus:
-            continue
-        black_hole = find_cursus[0]
-        if not black_hole:
-            continue
+        black_hole = find_cursus[0] if find_cursus else None
         projects_users = [p['project'] for p in r['projects_users'] \
                 if p['project']['id'] == models.Project.EXAM_06 or \
                    p['project']['id'] == models.Project.FT_TRANSCENDENCE]
         logger.info(f'User has validate {len(projects_users)} project for end common core')
-        if len(projects_users):
-            continue
-        black_hole_obj = datetime.strptime(black_hole[:-1], "%Y-%m-%dT%H:%M:%S.%f")
-        day_left = black_hole_obj - date_now
-        if day_left.days < 0:
-            continue
+        black_hole_obj = datetime.strptime(black_hole[:-1], "%Y-%m-%dT%H:%M:%S.%f") if black_hole else None
+        day_left = black_hole_obj - date_now if black_hole_obj else None
 
-        users = models.User(
-            id=ObjectId(),
-            user_id=r['id'],
-            login=r['login'],
-            url=r['url'],
-            image_url=r['image_url'],
-            black_hole_at=str(day_left),
-            days_left=day_left.days
-        )
-        logger.info(users)
-        user_manager.add_user(users)
+        if save_user(day_left, projects_users, black_hole, find_cursus, r):
+            logger.info(f'User {r["login"]} has been saved')
+        else:
+            continue
     return users
 
 
