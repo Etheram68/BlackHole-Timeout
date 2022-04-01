@@ -1,8 +1,10 @@
-from src.entity_models.models import DateAddNewUsers
 from bson.objectid import ObjectId
 from typing import List
 from datetime import datetime
+from src.entity_models.models import DateAddNewUsers
+from src.logger.logger import logger as logger_main
 
+logger = logger_main.getChild(__name__)
 
 class DateManager:
 
@@ -14,9 +16,11 @@ class DateManager:
         return self.dao_date.get_date()
 
     def update_date(self):
-        date = DateAddNewUsers(
-            month=datetime.utcnow().month,
-            years=datetime.utcnow().year,
-            datetime=datetime.utcnow()
+        date = datetime(datetime.utcnow().year + 1, 11, 1, 0, 0, 0)
+        next_update_date = DateAddNewUsers(
+            id=ObjectId(),
+            month=date.month,
+            years=date.year,
+            datetime=date
         )
-        return self.dao_date.update_date(date)
+        return self.dao_date.update_date(next_update_date)

@@ -100,7 +100,7 @@ if __name__ == '__main__':
     logger.debug(code)
     id_campus = get_campus_id(scholl_name)
     logger.debug(result)
-    if not result:
+    if not result or result.datetime < datetime.utcnow():
         date_manager.update_date()
         users_id = get_id_users_campus(id_campus)
     else:

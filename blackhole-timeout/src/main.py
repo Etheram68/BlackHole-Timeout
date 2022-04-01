@@ -1,5 +1,4 @@
 import os
-
 from datetime import datetime
 from fastapi import FastAPI, status
 from src.logger.logger import logger as logger_main
@@ -18,7 +17,7 @@ date_manager = DateManager(dao_factory)
 @app.get("/")
 def read_root():
     res = date_manager.get_date()
-    print(res)
+    print(res.datetime > datetime.utcnow())
     return {"Hello": "World"}
 
 

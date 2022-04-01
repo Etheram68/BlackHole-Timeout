@@ -1,11 +1,13 @@
 from src.entity_models.models import DateAddNewUsers
 from src.logger.logger import logger as logger_main
 
+logger = logger_main.getChild(__name__)
+
 class DaoDate:
 
     def __init__(self, db):
         self.db = db
-        self.coll = self.db.last_refresh_users
+        self.coll = self.db.next_refresh_users
 
     def get_date(self):
         results = self.coll.find_one()

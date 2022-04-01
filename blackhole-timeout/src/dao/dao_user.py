@@ -5,7 +5,6 @@ from bson.objectid import ObjectId
 from src.entity_models.models import User
 from src.logger.logger import logger as logger_main
 
-
 logger = logger_main.getChild(__name__)
 
 class DaoUser:
