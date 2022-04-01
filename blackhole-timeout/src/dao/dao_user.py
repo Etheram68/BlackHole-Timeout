@@ -18,7 +18,7 @@ class DaoUser:
 
     def add_user(self, user:User):
         q = {"user_id": user.user_id}
-        if self.coll.find(q) is not None:
+        if self.coll.find_one(q) is not None:
             logger.debug(f'User {user.user_id} already exist')
             return self.coll.update_one(q, {"$set": user.dict(by_alias=True, exclude={'id'})})
         return self.coll.insert_one(user.dict(by_alias=True)).inserted_id
