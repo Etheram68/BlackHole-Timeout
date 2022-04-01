@@ -25,15 +25,14 @@ def get_campus_id(campus_name):
     logger.error(f'Campus not exist or not active Json: {r}')
     exit()
 
-def save_user(day_left, projects_users, black_hole, find_cursus, r):
+def save_user(day_left, projects_users, r):
     user = user_manager.get_user(r['id'])
     if not day_left or day_left.days < 0 or len(projects_users) == 2 \
-                or not black_hole or not find_cursus \
-                or r['staff?'] or r['alumni'] or r['is_launched?']:
-            if user:
-                logger.info(f'User {r["login"]} has been deleted')
-                user_manager.delete_user(user.id)
-            return False
+            or r['staff?'] or r['alumni'] or r['is_launched?']:
+        if user:
+            logger.info(f'User {r["login"]} has been deleted')
+            user_manager.delete_user(user.id)
+        return False
 
     users = models.User(
         id=ObjectId(),
@@ -65,7 +64,7 @@ def get_users_info(users):
         black_hole_obj = datetime.strptime(black_hole[:-1], "%Y-%m-%dT%H:%M:%S.%f") if black_hole else None
         day_left = black_hole_obj - date_now if black_hole_obj else None
 
-        if save_user(day_left, projects_users, black_hole, find_cursus, r):
+        if save_user(day_left, projects_users, r):
             logger.info(f'User {r["login"]} has been saved')
         else:
             continue
