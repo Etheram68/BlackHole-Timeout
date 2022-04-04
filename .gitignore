@@ -1,8 +1,34 @@
+.DS_Store
+node_modules
+/dist
+
+
+# local env files
+.env.local
+.env.*.local
+.env
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+
+# Editor directories and files
 .venv/
 __pycache__/
-logs/
-*.db
-.env
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Build directories and files
 data/
+
+# Datebase files
+*.db
 BlackHole-Timeout.db
-.DS_Store

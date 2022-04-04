@@ -33,9 +33,9 @@ services:
   blackhole-timeout-back:
     build: ./blackhole-timeout-back
     restart: unless-stopped
-    entrypoint: ["uvicorn","--host", "0.0.0.0", "--port", "5172", "--reload", "src.main:app"]
+    entrypoint: ["uvicorn","--host", "0.0.0.0", "--port", "5280", "--reload", "src.main:app"]
     ports:
-      - '5172:5172'
+      - '5280:5280'
     env_file: ./.env
     environment:
       MONGODB_ADMINUSERNAME: '${BLACKHOLE_TIMEOUT_MONGODB_USER_API}'
@@ -52,8 +52,8 @@ services:
       API_KEY_SECRET: '${BLACKHOLE_TIMEOUT_API_KEY_SECRET}'
       SCHOOL_NAME: '${BLACKHOLE_TIMEOUT_SCHOOL_NAME}'
     volumes:
-      - '${PROJECT_PATH}/blackhole-timeout/src:/usr/app/src'
-      - '${PROJECT_PATH}/blackhole-timeout/logs:/usr/app/logs'
+      - '${PROJECT_PATH}/blackhole-timeout-back/src:/usr/app/src'
+      - '${PROJECT_PATH}/blackhole-timeout-back/logs:/usr/app/logs'
     links:
       - mongo
     depends_on:
