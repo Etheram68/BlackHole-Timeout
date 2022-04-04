@@ -10,6 +10,6 @@ COPY src ./src
 RUN pip install -r requirements.txt
 RUN mv src/cron-script.py ./
 
-EXPOSE 8080
+EXPOSE 5172
 
-ENTRYPOINT ["uvicorn","src.main:app","--host", "0.0.0.0", "--port", "8080", "--reload"]
+ENTRYPOINT ["uvicorn","src.main:app","--host", "0.0.0.0", "--port", "5172", "--reload"]
