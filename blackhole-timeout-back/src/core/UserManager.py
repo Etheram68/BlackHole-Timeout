@@ -21,8 +21,8 @@ class UserManager:
     def get_users(self):
         return self.dao_user.get_users()
 
-    def get_user(self, user_id:str):
+    def get_user(self, user_id:int):
         return self.dao_user.get_user(user_id)
 
-    def delete_user(self, user_id:str):
+    def delete_user(self, user_id:int):
         return self.dao_user.delete_user(user_id)

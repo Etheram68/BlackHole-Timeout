@@ -32,7 +32,7 @@ class Base(BaseModel):
 
 
 class User(Base):
-    user_id: str
+    user_id: int
     login: str
     url: str
     image_url: str
@@ -45,7 +45,7 @@ class DateAddNewUsers(Base):
     datetime: datetime
 
 class UserResponse(BaseModel):
-    user_id: str
+    user_id: int
     login: str
     url: str
     image_url: str

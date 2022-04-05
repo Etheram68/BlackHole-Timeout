@@ -26,6 +26,7 @@ def get_campus_id(campus_name):
     exit()
 
 def save_user(day_left, projects_users, r):
+    logger.debug(r['id'])
     user = user_manager.get_user(r['id'])
     if not day_left or day_left.days < 0 or len(projects_users) == 2 \
             or r['staff?'] or r['alumni'] or r['is_launched?']:

@@ -37,14 +37,14 @@ class DaoUser:
             return [user['user_id'] for user in results]
         return results
 
-    def get_user(self, user_id:str):
+    def get_user(self, user_id:int):
         q = {"user_id": user_id}
         results = self.coll.find_one(q)
         logger.debug(results)
         if results:
-            return User.parse_obj(results[0])
+            return User.parse_obj(results)
         return results
 
-    def delete_user(self, user_id:str):
+    def delete_user(self, user_id:int):
         q = {"user_id": user_id}
         return self.coll.delete_one(q)
