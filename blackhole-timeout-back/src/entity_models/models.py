@@ -35,6 +35,8 @@ class User(Base):
     user_id: int
     login: str
     url: str
+    email: str
+    last_connection: datetime
     image_url: str
     black_hole_at: str
     days_left: int

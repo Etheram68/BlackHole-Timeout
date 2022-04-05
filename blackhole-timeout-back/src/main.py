@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from fastapi import FastAPI, status
+from fastapi.middleware.cors import CORSMiddleware
 from src.logger.logger import logger as logger_main
 from src.entity_models import models
 from src.dao.dao_factory import DaoFactory
@@ -13,6 +14,12 @@ logger = logger_main.getChild(__name__)
 dao_factory = DaoFactory()
 user_manager = UserManager(dao_factory)
 date_manager = DateManager(dao_factory)
+
+app.add_middleware(CORSMiddleware,
+allow_origins=["*"],
+allow_credentials=True,
+allow_methods=["*"],
+allow_headers=["*"],)
 
 @app.get("/")
 def read_root():
@@ -27,5 +34,5 @@ def users_blackhole_timeout(page:int = 1):
         timestamp=datetime.utcnow(),
         status='OK',
         message='Done',
-        data=results
+        data=results,
     )

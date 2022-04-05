@@ -34,11 +34,21 @@ def save_user(day_left, projects_users, r):
             logger.info(f'User {r["login"]} has been deleted')
             user_manager.delete_user(user.id)
         return False
-
+    last_connection = datetime.strptime(r['anonymize_date'], '%Y-%m-%dT%H:%M:%S.%f%z')
+    last_connection = datetime(
+                                last_connection.year - 1,
+                                last_connection.month,
+                                last_connection.day,
+                                last_connection.hour,
+                                last_connection.minute,
+                                last_connection.second
+                            )
     users = models.User(
         id=ObjectId(),
         user_id=r['id'],
         login=r['login'],
+        email=r['email'],
+        last_connection=last_connection,
         url=r['url'],
         image_url=r['image_url'],
         black_hole_at=str(day_left),
