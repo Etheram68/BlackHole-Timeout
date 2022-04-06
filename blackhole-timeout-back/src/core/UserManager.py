@@ -15,7 +15,7 @@ class UserManager:
     def add_user(self, user: User):
         return self.dao_user.add_user(user)
 
-    def get_users_blackhole(self, page_number: int, page_size: int=30, blackhole: int=30):
+    def get_users_blackhole(self, page_number: int, page_size: int=28, blackhole: int=30):
         return self.dao_user.get_users_blackhole(page_number, page_size, blackhole)
 
     def get_users(self):

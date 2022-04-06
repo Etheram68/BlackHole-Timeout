@@ -23,7 +23,7 @@ class DaoUser:
             return self.coll.update_one(q, {"$set": user.dict(by_alias=True, exclude={'id'})})
         return self.coll.insert_one(user.dict(by_alias=True)).inserted_id
 
-    def get_users_blackhole(self, page_number: int, page_size: int=30, blackhole: int=30):
+    def get_users_blackhole(self, page_number: int, page_size: int, blackhole: int):
         q = {"days_left": { '$gt' :  0, '$lt' : blackhole}}
         results = self.coll.find(q)
         if page_size is not None and page_number is not None:
