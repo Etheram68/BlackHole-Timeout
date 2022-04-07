@@ -1,17 +1,18 @@
 <template>
   <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <ListUser></ListUser>
+    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+    <header-top></header-top>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import ListUser from './components/ListUser.vue'
+  import HeaderTop from './components/Header'
 
   export default {
     name: 'App',
     components: {
-      ListUser
+      'header-top': HeaderTop,
     }
   }
 </script>
