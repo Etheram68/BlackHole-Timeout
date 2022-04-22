@@ -1,7 +1,7 @@
 <template>
-	<div class="md:flex">
-		<div class="md:shrink-0">
-			<img class="h-48 w-full object-cover md:h-full md:w-48" :src="urlImg=user.image_url" :alt="'profile_'+user.login">
+	<div class="sm:flex">
+		<div class="sm:shrink-0">
+			<img class="h-48 w-full object-cover sm:h-full sm:w-48" :src="urlImg=user.image_url" :alt="'profile_'+user.login">
 		</div>
 		<div class="p-8">
 			<div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold" @click.prevent="openProfile(user.login)">{{ user.login }}</div>
