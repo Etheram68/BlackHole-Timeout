@@ -22,10 +22,10 @@
 		},
 		methods: {
 			convertDate: function(str_date) {
-				return new Date(str_date).toUTCString().split(' ').slice(0, 4).join(' ')
+				return new Date(str_date).toUTCString().split(' ').slice(0, 4).join(' ');
 			},
 			logger: function(trace) {
-				console.log(trace)
+				console.log(trace);
 			},
 			getUsers: function() {
 				axios
@@ -41,14 +41,14 @@
 					console.log(response.data.data);
 					this.users.push(...response.data.data);
 					this.page_index++;
-				})
+				});
 			}
 		},
 		components: {
 			'item-user': ItemUser
 		},
 		mounted() {
-			this.getUsers()
+			this.getUsers();
 		}
 	}
 </script>
