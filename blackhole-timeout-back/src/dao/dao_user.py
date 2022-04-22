@@ -27,7 +27,7 @@ class DaoUser:
         q = {"days_left": { '$gt' :  0, '$lt' : blackhole}}
         results = self.coll.find(q)
         if page_size is not None and page_number is not None:
-            results = results.sort([("days_left", pymongo.ASCENDING)]).skip(
+            results = results.sort([("days_left", pymongo.ASCENDING), ("login", pymongo.ASCENDING)]).skip(
                 page_number*page_size).limit(page_size)
         return [User.parse_obj(obj) for obj in results]
 
