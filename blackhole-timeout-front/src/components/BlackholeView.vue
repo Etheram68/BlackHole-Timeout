@@ -2,7 +2,7 @@
 	<div class="users-bh" ref="users_bh">
 		<ul class="grid h-full place-items-center justify-cente gap-x-8 gap-y-4 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 p-8">
 			<li class="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" v-for="(user, index) in users" v-bind:key="index">
-				<item-user :user=user :convertDate=convertDate></item-user>
+				<item-user :user=user :convertDate=convertDate :deltaDays=deltaDays></item-user>
 			</li>
 		</ul>
 	</div>
@@ -23,6 +23,12 @@
 		methods: {
 			convertDate: function(str_date) {
 				return new Date(str_date).toUTCString().split(' ').slice(0, 4).join(' ');
+			},
+			deltaDays: function(str_date) {
+				let date_now = new Date().getTime();
+				let date = new Date(str_date).toUTCString().split(' ').slice(0, 4).join(' ')
+				date = Date.parse(date);
+				return Math.ceil(Math.abs(date - date_now) / (1000 * 60 * 60 * 24))
 			},
 			calcNumberItemsPages: function() {
 				if (window.innerWidth >= 1890)
