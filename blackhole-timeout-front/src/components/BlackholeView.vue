@@ -24,8 +24,17 @@
 			convertDate: function(str_date) {
 				return new Date(str_date).toUTCString().split(' ').slice(0, 4).join(' ');
 			},
-			logger: function(trace) {
-				console.log(trace);
+			calcNumberItemsPages: function() {
+				if (window.innerWidth >= 1890)
+					return 28;
+				else if (window.innerWidth >= 1536)
+					return 21;
+				else if (window.innerWidth >= 1024)
+					return 16;
+				else if (window.innerWidth >= 768)
+					return 10;
+				else
+					return 8;
 			},
 			getUsers: function() {
 				axios
@@ -34,7 +43,8 @@
 						"Access-Control-Allow-Origin": "*"
 					},
 					params: {
-						page: this.page_index
+						page: this.page_index,
+						nb_per_page: this.calcNumberItemsPages()
 					}
 				})
 				.then(response => {

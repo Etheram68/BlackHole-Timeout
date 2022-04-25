@@ -27,8 +27,8 @@ def read_root():
 
 
 @app.get("/users/blackhole-timeout", response_model=models.UsersBlackholeResponse, status_code=status.HTTP_200_OK, tags=['Users'], openapi_extra={"requestBody": None})
-def users_blackhole_timeout(page:int = 1):
-    results = user_manager.get_users_blackhole(page - 1)
+def users_blackhole_timeout(page:int = 1, nb_per_page:int = 20, blackhole:int = 30):
+    results = user_manager.get_users_blackhole(page_number=page - 1, page_size=nb_per_page, blackhole=blackhole)
     return models.UsersBlackholeResponse(
         success=True,
         timestamp=datetime.utcnow(),
