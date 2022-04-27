@@ -56,7 +56,7 @@
                     }
                 })
                 .then(response => {
-                    console.log(response.data.data);
+                    // console.log(response.data.data);
                     this.users.push(...response.data.data);
                     this.page_index++;
                 });

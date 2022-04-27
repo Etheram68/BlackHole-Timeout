@@ -38,12 +38,14 @@
                         "Access-Control-Allow-Origin": "*"
                     },
                     params: {
+						blackhole: 30
                     }
                 })
                 .then(response => {
+					// console.log(response);
 					this.message_export = 'Export to CSV';
 					this.spin_hidden = false;
-					const blob = new Blob([response.data], { type: 'application/pdf' })
+					const blob = new Blob([response.data], { type: 'application/csv' })
 					const link = document.createElement('a')
 					link.href = URL.createObjectURL(blob)
 					link.download = response.headers['content-disposition'].split('filename=')[1].split(';')[0]

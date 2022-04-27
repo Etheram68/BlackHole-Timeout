@@ -46,7 +46,7 @@ def users_blackhole_export(blackhole:int = 30):
     logger.debug([obj.dict() for obj in results])
     df = pd.DataFrame([obj.dict() for obj in results])
     stream = io.StringIO()
-    df.to_csv(stream)
+    df.to_csv(stream, index=False)
     return StreamingResponse(
         iter([stream.getvalue()]),
         media_type="text/csv",
