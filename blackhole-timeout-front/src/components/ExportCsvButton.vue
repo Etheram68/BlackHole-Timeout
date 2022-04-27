@@ -33,7 +33,7 @@
 				this.message_export = 'Exporting...';
 				this.spin_hidden = true;
 				axios
-				.get('http://localhost:5280/users/blackhole', {
+				.get('http://localhost:5280/users/blackhole-timeout/csv', {
                     headers: {
                         "Access-Control-Allow-Origin": "*"
                     },
@@ -41,10 +41,15 @@
                     }
                 })
                 .then(response => {
-                    console.log(response.data.data);
-                    this.users.push(...response.data.data);
-                    this.page_index++;
-                });
+					this.message_export = 'Export to CSV';
+					this.spin_hidden = false;
+					const blob = new Blob([response.data], { type: 'application/pdf' })
+					const link = document.createElement('a')
+					link.href = URL.createObjectURL(blob)
+					link.download = response.headers['content-disposition'].split('filename=')[1].split(';')[0]
+					link.click()
+					URL.revokeObjectURL(link.href)
+                }).catch(console.error);
 			}
 		}
 	}
