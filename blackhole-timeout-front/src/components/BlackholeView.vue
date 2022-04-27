@@ -2,7 +2,7 @@
     <div class="users-bh" ref="users_bh">
         <export-csv-button></export-csv-button>
         <ul class="grid h-full place-items-center justify-cente gap-x-8 gap-y-4 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 p-8">
-            <li class="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl" v-for="(user, index) in users" v-bind:key="index">
+            <li class="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl dark:dark:dark:bg-slate-600" v-for="(user, index) in users" v-bind:key="index">
                 <item-user :user=user :convertDate=convertDate :deltaDays=deltaDays></item-user>
             </li>
         </ul>

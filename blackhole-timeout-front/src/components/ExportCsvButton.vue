@@ -1,11 +1,11 @@
 <template>
 	<div class="flex flex-row-reverse mr-5">
-		<button class="relative px-5 py-3 overflow-hidden font-medium text-white bg-cyan-500 border border-cyan-100 rounded shadow-inner group">
+		<button class="relative px-5 py-3 overflow-hidden font-medium text-white bg-cyan-500 border border-cyan-100 rounded shadow-inner group dark:dark:bg-slate-900">
 			<span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
 			<span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
-			<span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
-			<span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
-			<span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
+			<span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease dark:dark:bg-gray-700"></span>
+			<span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease dark:dark:bg-gray-700"></span>
+			<span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100 dark:dark:bg-slate-600"></span>
 			<span class="relative transition-colors duration-300 delay-200 group-hover:text-white ease inline-flex rounded-md" v-on:click="getCsv()">
 				<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" v-show="spin_hidden">
 					<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
