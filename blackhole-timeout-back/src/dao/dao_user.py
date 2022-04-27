@@ -3,6 +3,7 @@ import pymongo, json
 from typing import List
 from bson.objectid import ObjectId
 from src.entity_models.models import User
+from src.entity_models.models import UserCsv
 from src.logger.logger import logger as logger_main
 
 logger = logger_main.getChild(__name__)
@@ -30,6 +31,12 @@ class DaoUser:
             results = results.sort([("days_left", pymongo.ASCENDING), ("login", pymongo.ASCENDING)]).skip(
                 page_number*page_size).limit(page_size)
         return [User.parse_obj(obj) for obj in results]
+
+    def get_users_blackhole_csv(self, blackhole:int):
+        q = {"days_left": { '$gt' :  0, '$lt' : blackhole}}
+        results = self.coll.find(q)
+        results = results.sort([("days_left", pymongo.ASCENDING), ("login", pymongo.ASCENDING)])
+        return [UserCsv.parse_obj(obj) for obj in results]
 
     def get_users(self):
         results = self.coll.find()

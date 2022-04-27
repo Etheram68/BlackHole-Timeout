@@ -1,6 +1,8 @@
-import os
+import os, io
+import pandas as pd
 from datetime import datetime
 from fastapi import FastAPI, status
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.logger.logger import logger as logger_main
 from src.entity_models import models
@@ -35,4 +37,21 @@ def users_blackhole_timeout(page:int = 1, nb_per_page:int = 20, blackhole:int = 
         status='OK',
         message='Done',
         data=results,
+    )
+
+
+@app.get("/users/blackhole-timeout/csv", response_class=StreamingResponse, status_code=status.HTTP_201_CREATED, tags=['Users'], openapi_extra={"requestBody": None})
+def users_blackhole_export(blackhole:int = 30):
+    results = user_manager.get_users_blackhole_csv(blackhole)
+    logger.debug([obj.dict() for obj in results])
+    df = pd.DataFrame([obj.dict() for obj in results])
+    stream = io.StringIO()
+    df.to_csv(stream)
+    return StreamingResponse(
+        iter([stream.getvalue()]),
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=UsersBlackhole.csv",
+            'Access-Control-Expose-Headers': 'Content-Disposition'
+        }
     )

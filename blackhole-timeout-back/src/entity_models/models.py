@@ -1,6 +1,7 @@
+from email.mime import base
 from enum import Enum
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Optional, Any
 from bson.objectid import ObjectId
 from datetime import datetime
 
@@ -30,6 +31,11 @@ class Base(BaseModel):
             datetime: lambda dt: dt.strftime('%Y-%m-%dT%H:%M:%SZ')
         }
 
+class UserCsv(BaseModel):
+    login: str
+    email: str
+    black_hole_at: str
+    days_left: int
 
 class User(Base):
     user_id: int

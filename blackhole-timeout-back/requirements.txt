@@ -10,9 +10,13 @@ httptools==0.4.0
 idna==3.3
 logger==1.4
 mongo==0.2.0
+numpy==1.22.3
+pandas==1.4.2
 pydantic==1.9.0
 pymongo==4.0.2
+python-dateutil==2.8.2
 python-dotenv==0.20.0
+pytz==2022.1
 PyYAML==6.0
 requests==2.27.1
 six==1.16.0
@@ -20,7 +24,7 @@ sniffio==1.2.0
 starlette==0.17.1
 typing_extensions==4.1.1
 urllib3==1.26.8
-uvicorn[standard]==0.17.6
+uvicorn==0.17.6
 uvloop==0.16.0
 watchgod==0.8.1
 websockets==10.2
