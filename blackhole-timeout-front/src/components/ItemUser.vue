@@ -7,7 +7,7 @@
 			<div id="login" class="uppercase tracking-wide text-sm text-indigo-500 font-semibold dark:text-indigo-400" @click.prevent="openProfile(user.login)" :data_title="data_title=concatUrl(user.login)">{{ user.login }}</div>
 			<p class="mt-2 text-slate-500 dark:text-white">Email: {{ user.email }}</p>
 			<p class="mt-2 text-slate-500 dark:text-white">Days Left: {{ user.days_left }}</p>
-			<p class="mt-2 text-slate-500 dark:text-white" :data_title="data_title=convertDate(user.last_connection, user.login)">Last connexion: {{ deltaDays(user.last_connection) }} days</p>
+			<p class="mt-2 text-slate-500 dark:text-white" :data_title="data_title=convertDate(user.last_connection)">Last connexion: {{ deltaDays(user.last_connection) }} days</p>
 		</div>
 	</div>
 </template>
