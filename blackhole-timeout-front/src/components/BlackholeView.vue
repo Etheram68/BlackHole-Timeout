@@ -23,14 +23,15 @@
             }
         },
         methods: {
-            convertDate: function(str_date) {
+            convertDate: function(str_date, login) { ET BAH ALORS ON SE DELOG PAS ?
+                console.log(new Date(str_date).toLocaleString('fr-FR', { timeZone: 'UTC' }).split(' ').slice(0, 4).join(' '), login, str_date, new Date(str_date).getTimezoneOffset())
                 return new Date(str_date).toUTCString().split(' ').slice(0, 4).join(' ');
             },
             deltaDays: function(str_date) {
                 let date_now = new Date().getTime();
                 let date = new Date(str_date).toUTCString().split(' ').slice(0, 4).join(' ')
                 date = Date.parse(date);
-                return Math.ceil(Math.abs(date - date_now) / (1000 * 60 * 60 * 24))
+                return Math.ceil(Math.abs(date - date_now) / (1000 * 60 * 60 * 24)) - 1
             },
             calcNumberItemsPages: function() {
                 if (window.innerWidth >= 1890)
