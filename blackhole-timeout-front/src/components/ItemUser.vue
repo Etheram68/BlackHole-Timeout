@@ -32,7 +32,6 @@
 	#login {
 		cursor: pointer;
 	}
-
 	[data_title]:hover:after {
 		opacity: 1;
 		transition: all 0.2s ease 0.6s;
@@ -61,5 +60,12 @@
 							top, #f8f8f8, #cccccc);
 
 		visibility: hidden;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		[data_title]:after {
+			background-color: #1e293b;
+			color: white;
+		}
 	}
 </style>
