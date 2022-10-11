@@ -1,5 +1,5 @@
 <template>
-  <div class="dark:bg-slate-800">
+  <div class="dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900">
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <header-top></header-top>
     <router-view></router-view>
@@ -21,4 +21,9 @@
 </script>
 
 <style>
+	@media (prefers-color-scheme: dark) {
+		body {
+			background: #0f172a;
+		}
+	}
 </style>
